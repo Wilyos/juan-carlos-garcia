@@ -19,6 +19,18 @@ const Contact = () => {
     const numeroWhatsApp = "3176381655";
   const texto = `Mi nombre es ${nombre}, ${mensaje} y estos son mis datos: ${correo} y ${telefono}`;
   const url = `https://wa.me/57${numeroWhatsApp}?text=${encodeURIComponent(texto.replace(/\n/g, ' '))}`;
+  // Descargar vCard
+  const vCardData = `BEGIN:VCARD\nVERSION:3.0\nFN:Juan Carlos Zuleta\nN:Zuleta;Juan Carlos;;;\nORG:IPROCOM S.A.\nTITLE:Gerente General\nTEL:+573176381655\nEMAIL:Jzuleta@iprocom.co\nURL:https://ipropanel.com.co\nEND:VCARD`;
+  const blob = new Blob([vCardData.replace(/\\n/g, '\n')], { type: 'text/vcard' });
+  const vcfUrl = window.URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = vcfUrl;
+  link.download = 'Juan_Carlos_Zuleta_IPROCOM.vcf';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(vcfUrl);
+  // Redirigir a WhatsApp
   window.open(url, "_blank");
   };
 

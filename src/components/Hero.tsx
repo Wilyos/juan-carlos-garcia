@@ -21,24 +21,12 @@ const Hero = () => {
   }, []);
 
 
-  // Scroll y descarga vCard
+  // Solo scroll a la sección de contacto
   const handleContactClick = () => {
-    // Scroll suave a la sección de contacto
     const contactSection = document.getElementById("contact");
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: "smooth" });
     }
-    // Descargar vCard
-    const vCardData = `BEGIN:VCARD\nVERSION:3.0\nFN:Juan Carlos Zuleta\nN:Zuleta;Juan Carlos;;;\nORG:IPROCOM S.A.\nTITLE:Gerente General\nTEL:+573176381655\nEMAIL:Jzuleta@iprocom.co\nURL:https://ipropanel.com.co\nEND:VCARD`;
-    const blob = new Blob([vCardData], { type: 'text/vcard' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'Juan_Carlos_Zuleta_IPROCOM.vcf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
   };
 
   return (
