@@ -8,6 +8,20 @@ const Contact = () => {
     { icon: Mail, href: "mailto:Jzuleta@iprocom.co", label: "Email", username: "Jzuleta@iprocom.co" }
   ];
 
+  // Función para enviar mensaje por WhatsApp
+  const handleWhatsApp = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const nombre = (form.nombre as HTMLInputElement).value;
+    const telefono = (form.telefono as HTMLInputElement).value;
+    const correo = (form.correo as HTMLInputElement).value;
+    const mensaje = (form.mensaje as HTMLInputElement).value;
+    const numeroWhatsApp = "3176381655";
+  const texto = `Mi nombre es ${nombre}, ${mensaje} y estos son mis datos: ${correo} y ${telefono}`;
+  const url = `https://wa.me/57${numeroWhatsApp}?text=${encodeURIComponent(texto.replace(/\n/g, ' '))}`;
+  window.open(url, "_blank");
+  };
+
   return (
     <section className="py-24 bg-secondary/30" id="contact">
       <div className="container mx-auto px-6">
@@ -21,25 +35,52 @@ const Contact = () => {
           </p>
         </div>
         
-        <div className="max-w-2xl mx-auto">
-          <div className="space-y-6">
-            {socialLinks.map(({ icon: Icon, href, label, username }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center p-6 rounded-xl bg-card border border-border hover:border-primary transition-all duration-300 hover:scale-105 group"
-              >
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mr-6 group-hover:bg-primary/20 transition-colors">
-                  <Icon className="h-8 w-8 text-primary" />
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+            {/* Enlaces de redes */}
+            <div>
+              <div className="space-y-6">
+                {socialLinks.map(({ icon: Icon, href, label, username }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center p-6 rounded-xl bg-card border border-border hover:border-primary transition-all duration-300 hover:scale-105 group"
+                  >
+                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mr-6 group-hover:bg-primary/20 transition-colors">
+                      <Icon className="h-8 w-8 text-primary" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-foreground text-lg">{label}</div>
+                      <div className="text-muted-foreground">{username}</div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+            {/* Formulario de contacto */}
+            <div>
+              <form className="space-y-6 bg-card border border-border rounded-2xl p-8 shadow-lg" onSubmit={handleWhatsApp}>
+                <div>
+                  <label htmlFor="nombre" className="block text-sm font-medium text-foreground mb-2">Nombre</label>
+                  <input type="text" id="nombre" name="nombre" className="w-full px-4 py-2 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:border-primary" required />
                 </div>
                 <div>
-                  <div className="font-medium text-foreground text-lg">{label}</div>
-                  <div className="text-muted-foreground">{username}</div>
+                  <label htmlFor="telefono" className="block text-sm font-medium text-foreground mb-2">Teléfono</label>
+                  <input type="tel" id="telefono" name="telefono" className="w-full px-4 py-2 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:border-primary" required />
                 </div>
-              </a>
-            ))}
+                <div>
+                  <label htmlFor="correo" className="block text-sm font-medium text-foreground mb-2">Correo</label>
+                  <input type="email" id="correo" name="correo" className="w-full px-4 py-2 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:border-primary" required />
+                </div>
+                <div>
+                  <label htmlFor="mensaje" className="block text-sm font-medium text-foreground mb-2">Mensaje</label>
+                  <textarea id="mensaje" name="mensaje" rows={4} className="w-full px-4 py-2 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:border-primary" required></textarea>
+                </div>
+                <button type="submit" className="w-full py-3 rounded-lg bg-primary text-background font-bold hover:bg-primary/90 transition-colors">Enviar Mensaje</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

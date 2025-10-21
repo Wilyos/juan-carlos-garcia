@@ -20,18 +20,16 @@ const Hero = () => {
     return () => observer.disconnect();
   }, []);
 
-  const downloadVCard = () => {
-    const vCardData = `BEGIN:VCARD
-VERSION:3.0
-FN:Juan Carlos Zuleta
-N:Zuleta;Juan Carlos;;;
-ORG:IPROCOM S.A.
-TITLE:Gerente General
-TEL:+573176381655
-EMAIL:Jzuleta@iprocom.co
-URL:https://ipropanel.com.co
-END:VCARD`;
 
+  // Scroll y descarga vCard
+  const handleContactClick = () => {
+    // Scroll suave a la sección de contacto
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+    // Descargar vCard
+    const vCardData = `BEGIN:VCARD\nVERSION:3.0\nFN:Juan Carlos Zuleta\nN:Zuleta;Juan Carlos;;;\nORG:IPROCOM S.A.\nTITLE:Gerente General\nTEL:+573176381655\nEMAIL:Jzuleta@iprocom.co\nURL:https://ipropanel.com.co\nEND:VCARD`;
     const blob = new Blob([vCardData], { type: 'text/vcard' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -104,9 +102,9 @@ END:VCARD`;
 
             {/* CTA Button */}
             <div className="mb-12">
-              <Button onClick={downloadVCard} className="btn-hero group">
+              <Button onClick={handleContactClick} className="btn-hero group">
                 <Download className="mr-2 h-5 w-5 group-hover:animate-bounce" />
-               Guardar Contacto
+                Contáctame
               </Button>
             </div>
 
