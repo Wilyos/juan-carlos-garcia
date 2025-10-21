@@ -19,6 +19,11 @@ const Contact = () => {
     const numeroWhatsApp = "3176381655";
   const texto = `Mi nombre es ${nombre}, ${mensaje} y estos son mis datos: ${correo} y ${telefono}`;
   const url = `https://wa.me/57${numeroWhatsApp}?text=${encodeURIComponent(texto.replace(/\n/g, ' '))}`;
+  // Contador en localStorage
+  let count = Number(localStorage.getItem('contactFormCount') || '0');
+  count++;
+  localStorage.setItem('contactFormCount', count.toString());
+  console.log(`Formularios enviados: ${count}`);
   // Descargar vCard
   const vCardData = `BEGIN:VCARD\nVERSION:3.0\nFN:Juan Carlos Zuleta\nN:Zuleta;Juan Carlos;;;\nORG:IPROCOM S.A.\nTITLE:Gerente General\nTEL:+573176381655\nEMAIL:Jzuleta@iprocom.co\nURL:https://ipropanel.com.co\nEND:VCARD`;
   const blob = new Blob([vCardData.replace(/\\n/g, '\n')], { type: 'text/vcard' });
