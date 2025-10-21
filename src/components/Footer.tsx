@@ -5,10 +5,18 @@ const Footer = () => {
   const [contador, setContador] = useState(null);
 
   useEffect(() => {
-    fetch("https://script.google.com/macros/s/AKfycbw-gR3FCFoz-Qg-UBnI97h0o9RDO3fDSVPFta0RhMpBeQCHqcygo8hLpkWkyodDHaneeA/exec")
-      .then(res => res.text())
-      .then(num => setContador(num))
-      .catch(() => setContador(null));
+    // Función para obtener el contador
+    const fetchContador = () => {
+      fetch("https://script.google.com/macros/s/AKfycbw-gR3FCFoz-Qg-UBnI97h0o9RDO3fDSVPFta0RhMpBeQCHqcygo8hLpkWkyodDHaneeA/exec")
+        .then(res => res.text())
+        .then(num => setContador(num))
+        .catch(() => setContador(null));
+    };
+    fetchContador();
+    // Escuchar evento personalizado para actualizar en tiempo real
+    const handler = (e: any) => setContador(e.detail);
+    window.addEventListener('contador-actualizado', handler);
+    return () => window.removeEventListener('contador-actualizado', handler);
   }, []);
 
   return (

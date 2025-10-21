@@ -1,4 +1,6 @@
+
 import { Globe, Linkedin, Mail, Instagram } from "lucide-react";
+import { useState } from "react";
 
 const Contact = () => {
   const socialLinks = [
@@ -8,8 +10,11 @@ const Contact = () => {
     { icon: Mail, href: "mailto:Jzuleta@iprocom.co", label: "Email", username: "Jzuleta@iprocom.co" }
   ];
 
-  // Función para enviar mensaje por WhatsApp
-  const handleWhatsApp = (e: React.FormEvent<HTMLFormElement>) => {
+  // Estado para actualizar el contador en el footer
+  const [contador, setContador] = useState<number | null>(null);
+
+  // Función para enviar mensaje por WhatsApp y actualizar contador global
+  const handleWhatsApp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const nombre = (form.nombre as HTMLInputElement).value;
@@ -17,26 +22,34 @@ const Contact = () => {
     const correo = (form.correo as HTMLInputElement).value;
     const mensaje = (form.mensaje as HTMLInputElement).value;
     const numeroWhatsApp = "3176381655";
-  const texto = `Mi nombre es ${nombre}, ${mensaje} y estos son mis datos: ${correo} y ${telefono}`;
-  const url = `https://wa.me/57${numeroWhatsApp}?text=${encodeURIComponent(texto.replace(/\n/g, ' '))}`;
-  // Contador en localStorage
-  let count = Number(localStorage.getItem('contactFormCount') || '0');
-  count++;
-  localStorage.setItem('contactFormCount', count.toString());
-  console.log(`Formularios enviados: ${count}`);
-  // Descargar vCard
-  const vCardData = `BEGIN:VCARD\nVERSION:3.0\nFN:Juan Carlos Zuleta\nN:Zuleta;Juan Carlos;;;\nORG:IPROCOM S.A.\nTITLE:Gerente General\nTEL:+573176381655\nEMAIL:Jzuleta@iprocom.co\nURL:https://ipropanel.com.co\nEND:VCARD`;
-  const blob = new Blob([vCardData.replace(/\\n/g, '\n')], { type: 'text/vcard' });
-  const vcfUrl = window.URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = vcfUrl;
-  link.download = 'Juan_Carlos_Zuleta_IPROCOM.vcf';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  window.URL.revokeObjectURL(vcfUrl);
-  // Redirigir a WhatsApp
-  window.open(url, "_blank");
+    const texto = `Mi nombre es ${nombre}, ${mensaje} y estos son mis datos: ${correo} y ${telefono}`;
+    const url = `https://wa.me/57${numeroWhatsApp}?text=${encodeURIComponent(texto.replace(/\n/g, ' '))}`;
+
+    // Incrementar contador global en Google Apps Script
+    try {
+      const res = await fetch("https://script.google.com/macros/s/AKfycbw-gR3FCFoz-Qg-UBnI97h0o9RDO3fDSVPFta0RhMpBeQCHqcygo8hLpkWkyodDHaneeA/exec", { method: "POST" });
+      const newCount = await res.text();
+      setContador(Number(newCount));
+      // También actualiza el contador en el footer si se usa contexto global o evento personalizado
+      window.dispatchEvent(new CustomEvent('contador-actualizado', { detail: Number(newCount) }));
+    } catch (err) {
+      // Si falla, no actualiza el contador
+    }
+
+    // Descargar vCard
+    const vCardData = `BEGIN:VCARD\nVERSION:3.0\nFN:Juan Carlos Zuleta\nN:Zuleta;Juan Carlos;;;\nORG:IPROCOM S.A.\nTITLE:Gerente General\nTEL:+573176381655\nEMAIL:Jzuleta@iprocom.co\nURL:https://ipropanel.com.co\nEND:VCARD`;
+    const blob = new Blob([vCardData.replace(/\\n/g, '\n')], { type: 'text/vcard' });
+    const vcfUrl = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = vcfUrl;
+    link.download = 'Juan_Carlos_Zuleta_IPROCOM.vcf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(vcfUrl);
+
+    // Redirigir a WhatsApp
+    window.open(url, "_blank");
   };
 
   return (
