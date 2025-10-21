@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Download, Globe, Linkedin, Mail, Instagram } from "lucide-react";
-import profileImage from "@/assets/iprocomlogo.png";
+import profileImage from "@/assets/iprocomlogov2.png";
 import dayBg from "@/assets/video/day-bg.mp4";
 import nightBg from "@/assets/video/night-bg.mp4";
 import { useEffect, useState } from "react";
@@ -29,7 +29,7 @@ ORG:IPROCOM S.A.
 TITLE:Gerente General
 TEL:+573176381655
 EMAIL:Jzuleta@iprocom.co
-URL:https://iprocom.com.co
+URL:https://ipropanel.com.co
 END:VCARD`;
 
     const blob = new Blob([vCardData], { type: 'text/vcard' });
@@ -99,7 +99,7 @@ END:VCARD`;
               Juan Carlos Zuleta
             </h1>
             <p className="text-xl lg:text-2xl text-foreground mb-8 leading-relaxed">
-              Gerente General en IPROCOM.
+              Gerente General.
             </p>
 
             {/* CTA Button */}
@@ -113,9 +113,9 @@ END:VCARD`;
             {/* Social Icons */}
             <div className="flex justify-center lg:justify-start space-x-6">
               {[
-                { icon: Globe, href: "https://iprocom.com.co", label: "Website" },
+                { icon: Globe, href: "https://ipropanel.com.co", label: "Website" },
                 { icon: Linkedin, href: "https://www.linkedin.com/company/iprocom-s-a/?originalSubdomain=co", label: "LinkedIn" },
-                { icon: Instagram, href: "https://www.instagram.com/iprocom_col/", label: "Instagram" },
+                { icon: Instagram, href: "https://www.instagram.com/ipropanel", label: "Instagram" },
                 { icon: Mail, href: "mailto:Jzuleta@iprocom.co", label: "Email" }
               ].map(({ icon: Icon, href, label }) => (
                 <a
