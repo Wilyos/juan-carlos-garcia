@@ -82,7 +82,7 @@ const Hero = () => {
           {/* Right side - Content */}
           <div className="text-center lg:text-left order-2 lg:order-2 px-4 lg:px-0">
             <h1 className="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
-              Juan Carlos Zuleta
+              Juan Carlos Zuleta Acevedo
             </h1>
             <p className="text-xl lg:text-2xl text-foreground mb-8 leading-relaxed">
               Gerente General.
