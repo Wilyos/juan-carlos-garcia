@@ -20,22 +20,27 @@ const Contact = () => {
     const nombre = (form.nombre as HTMLInputElement).value;
     const telefono = (form.telefono as HTMLInputElement).value;
     const correo = (form.correo as HTMLInputElement).value;
-  const empresa = (form.empresa as HTMLInputElement).value;
-  const numeroWhatsApp = "3176381655";
-  const texto = `Mi nombre es ${nombre}, mi empresa es ${empresa} y estos son mis datos: ${correo} y ${telefono}`;
-  const url = `https://wa.me/57${numeroWhatsApp}?text=${encodeURIComponent(texto.replace(/\n/g, ' '))}`;
+    const empresa = (form.empresa as HTMLInputElement).value;
+    const numeroWhatsApp = "3176381655";
+    const texto = `Mi nombre es ${nombre}, mi empresa es ${empresa} y estos son mis datos: ${correo} y ${telefono}`;
+    const url = `https://wa.me/send?phone=57${numeroWhatsApp}&text=${encodeURIComponent(texto.replace(/\n/g, ' '))}`;
+
+    // Guardar datos en Google Sheets vía Apps Script
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbw-gR3FCFoz-Qg-UBnI97h0o9RDO3fDSVPFta0RhMpBeQCHqcygo8hLpkWkyodDHaneeA/exec";
+    const params = new URLSearchParams({ nombre, empresa, correo, telefono });
+    try {
+      await fetch(scriptUrl, { method: "POST", body: params });
+    } catch (err) {
+      // Si falla, no pasa nada
+    }
 
     // Incrementar contador global en Google Apps Script
     try {
-      const res = await fetch("https://script.google.com/macros/s/AKfycbw-gR3FCFoz-Qg-UBnI97h0o9RDO3fDSVPFta0RhMpBeQCHqcygo8hLpkWkyodDHaneeA/exec", { method: "POST" });
+      const res = await fetch(scriptUrl, { method: "POST" });
       const newCount = await res.text();
       setContador(Number(newCount));
-      // También actualiza el contador en el footer si se usa contexto global o evento personalizado
       window.dispatchEvent(new CustomEvent('contador-actualizado', { detail: Number(newCount) }));
-    } catch (err) {
-      // Si falla, no actualiza el contador
-    }
-
+    } catch (err) {}
 
     // Redirigir a WhatsApp
     window.open(url, "_blank");
