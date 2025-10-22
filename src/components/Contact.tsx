@@ -23,7 +23,7 @@ const Contact = () => {
     const empresa = (form.empresa as HTMLInputElement).value;
     const numeroWhatsApp = "3176381655";
     const texto = `Mi nombre es ${nombre}, mi empresa es ${empresa} y estos son mis datos: ${correo} y ${telefono}`;
-    const url = `https://wa.me/send?phone=57${numeroWhatsApp}&text=${encodeURIComponent(texto.replace(/\n/g, ' '))}`;
+    const url = `https://api.whatsapp.com/send?phone=57${numeroWhatsApp}&text=${encodeURIComponent(texto.replace(/\n/g, ' '))}`;
 
     // Guardar datos en Google Sheets vía Apps Script
     const scriptUrl = "https://script.google.com/macros/s/AKfycbw-gR3FCFoz-Qg-UBnI97h0o9RDO3fDSVPFta0RhMpBeQCHqcygo8hLpkWkyodDHaneeA/exec";
