@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Download, Globe, Linkedin, Mail, Instagram } from "lucide-react";
-import profileImage from "@/assets/juanprofile.jpg";
+import profileImage from "@/assets/juanprofilev2.webp";
 import dayBg from "@/assets/video/day-bg.mp4";
 import nightBg from "@/assets/video/night-bg.mp4";
 import { useEffect, useState } from "react";
@@ -81,9 +81,10 @@ const Hero = () => {
 
           {/* Right side - Content */}
           <div className="text-center lg:text-left order-2 lg:order-2 px-4 lg:px-0">
-            <h1 className="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
-              Juan Carlos Zuleta Acevedo
+            <h1 className="text-4xl lg:text-5xl font-bold mb-0 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
+              Juan Carlos
             </h1>
+            <h1 className="text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">Zuleta Acevedo</h1>
             <p className="text-xl lg:text-2xl text-foreground mb-8 leading-relaxed">
               Gerente General
             </p>
