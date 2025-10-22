@@ -1,6 +1,5 @@
 
 import { Globe, Linkedin, Mail, Instagram } from "lucide-react";
-import { useState } from "react";
 
 const Contact = () => {
   const socialLinks = [
@@ -10,8 +9,6 @@ const Contact = () => {
     { icon: Mail, href: "mailto:Jzuleta@iprocom.co", label: "Email", username: "Jzuleta@iprocom.co" }
   ];
 
-  // Estado para actualizar el contador en el footer
-  const [contador, setContador] = useState<number | null>(null);
 
   // Función para enviar mensaje por WhatsApp y actualizar contador global
   const handleWhatsApp = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,22 +24,15 @@ const Contact = () => {
     console.log("WhatsApp URL:", url);
     window.open(url, "_blank");
 
+
     // Guardar datos en Google Sheets vía Apps Script
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbw-gR3FCFoz-Qg-UBnI97h0o9RDO3fDSVPFta0RhMpBeQCHqcygo8hLpkWkyodDHaneeA/exec";
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbzQZBvqevIbsHvoNLsohYvfjhZrggsd3GjpRfguj8sywjUP510OtiuVji5CEvm6YMcyjw/exec";
     const params = new URLSearchParams({ nombre, empresa, correo, telefono });
     try {
       await fetch(scriptUrl, { method: "POST", body: params });
     } catch (err) {
       // Si falla, no pasa nada
     }
-
-    // Incrementar contador global en Google Apps Script
-    try {
-      const res = await fetch(scriptUrl, { method: "POST" });
-      const newCount = await res.text();
-      setContador(Number(newCount));
-      window.dispatchEvent(new CustomEvent('contador-actualizado', { detail: Number(newCount) }));
-    } catch (err) {}
 
     // Redirigir a WhatsApp
     window.open(url, "_blank");
