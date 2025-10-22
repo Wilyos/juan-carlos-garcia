@@ -85,7 +85,7 @@ const Hero = () => {
               Juan Carlos Zuleta Acevedo
             </h1>
             <p className="text-xl lg:text-2xl text-foreground mb-8 leading-relaxed">
-              Gerente General.
+              Gerente General
             </p>
 
             {/* CTA Button */}
