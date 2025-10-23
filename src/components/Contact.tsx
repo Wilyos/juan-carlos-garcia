@@ -18,16 +18,19 @@ const Contact = () => {
     const telefono = (form.telefono as HTMLInputElement).value;
     const correo = (form.correo as HTMLInputElement).value;
     const empresa = (form.empresa as HTMLInputElement).value;
+  const ciudad = (form.ciudad as HTMLInputElement).value;
+  console.log('Valor de ciudad:', ciudad);
     const numeroWhatsApp = "3176381655";
-    const texto = `Mi nombre es ${nombre}, mi empresa es ${empresa} y estos son mis datos: ${correo} y ${telefono}`;
+    const texto = `Mi nombre es ${nombre} de la ciudad de ${ciudad}, mi empresa es ${empresa} y estos son mis datos: ${correo} y ${telefono}`;
     const url = `https://api.whatsapp.com/send?phone=57${numeroWhatsApp}&text=${encodeURIComponent(texto)}`;
     console.log("WhatsApp URL:", url);
-    window.open(url, "_blank");
+    
 
 
     // Guardar datos en Google Sheets vía Apps Script
     const scriptUrl = "https://script.google.com/macros/s/AKfycbzQZBvqevIbsHvoNLsohYvfjhZrggsd3GjpRfguj8sywjUP510OtiuVji5CEvm6YMcyjw/exec";
-    const params = new URLSearchParams({ nombre, empresa, correo, telefono });
+  const params = new URLSearchParams({ nombre, empresa, correo, telefono, ciudad });
+  console.log('Datos enviados:', Object.fromEntries(params.entries()));
     try {
       await fetch(scriptUrl, { method: "POST", body: params });
     } catch (err) {
@@ -71,6 +74,10 @@ const Contact = () => {
                 <div>
                   <label htmlFor="empresa" className="block text-sm font-medium text-foreground mb-2">Empresa</label>
                   <input type="text" id="empresa" name="empresa" className="w-full px-4 py-2 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:border-primary" required />
+                </div>
+                <div>
+                  <label htmlFor="ciudad" className="block text-sm font-medium text-foreground mb-2">Ciudad</label>
+                  <input type="text" id="ciudad" name="ciudad" className="w-full px-4 py-2 rounded-lg border border-border bg-background text-foreground focus:outline-none focus:border-primary" required />
                 </div>
                 <button type="submit" className="w-full py-3 rounded-lg bg-primary text-background font-bold hover:bg-primary/90 transition-colors">Enviar Mensaje</button>
               </form>
